@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Ninject;
 using WpfApp2.Infrastructure.Entities;
@@ -14,31 +15,7 @@ namespace BookStore.ConsoleApp
       Console.WriteLine("Welcome to Book Store");
 
       IKernel kernel = new StandardKernel();
-
-      Console.WriteLine("1 - Text");
-      Console.WriteLine("2 - Json");
-      Console.Write("Enter your choice: ");
-      int select = 1;
-      if (!int.TryParse(Console.ReadLine(), out select) || select < 1 || select > 2)
-      {
-        Console.WriteLine("Invalid choice");
-      }
-
-      switch (select)
-      {
-        case 1:
-          kernel.Bind<IBookRepository>().To<BookRepository>()
-                .WithConstructorArgument("filePath", "Documents/books.txt")
-                .WithMetadata("type", "text");
-          break;
-        case 2:
-          kernel.Bind<IBookRepository>().To<BookJsonRepository>()
-              .WithConstructorArgument("filePath", "Documents/books.json")
-              .WithMetadata("type", "text");
-          break;
-       }
-
-      kernel.Bind<IBookService>().To<BookService>();
+      kernel.Load(Assembly.GetExecutingAssembly());
 
       while (true)
       {
