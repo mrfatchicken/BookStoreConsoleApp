@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp2.Infrastructure.Repository;
-using WpfApp2.Infrastructure.Services;
+using BookStore.Infrastructure.Repository;
+using BookStore.Infrastructure.Services;
 
-namespace BookStoreConsoleApp.Binding
+namespace BookStore.Binding
 {
   public class NInjectBindings : Ninject.Modules.NinjectModule
   {

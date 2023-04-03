@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp2.Infrastructure.Entities;
-using WpfApp2.Infrastructure.Repository;
+using BookStore.Infrastructure.Entities;
+using BookStore.Infrastructure.Repository;
 
-namespace WpfApp2.Infrastructure.Services
+namespace BookStore.Infrastructure.Services
 {
   public class BookService : IBookService
   {

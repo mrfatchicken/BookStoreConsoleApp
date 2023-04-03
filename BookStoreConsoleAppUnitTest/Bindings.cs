@@ -13,9 +13,9 @@ namespace BookStoreConsoleApp.Binding
     public override void Load()
     {
       Bind<IBookRepository>().To<BookRepository>().When(x => !IsJsonEnv()).WithConstructorArgument("filePath", "Documents/books.txt")
-                .WithMetadata("type", "text");
+                .WithMetadata("type", "test/text");
       Bind<IBookRepository>().To<BookJsonRepository>().When(x => IsJsonEnv()).WithConstructorArgument("filePath", "Documents/books.json")
-              .WithMetadata("type", "json");
+              .WithMetadata("type", "test/json");
       Bind<IBookService>().To<BookService>();
     }
 

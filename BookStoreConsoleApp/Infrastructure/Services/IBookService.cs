@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp2.Infrastructure.Entities;
+using BookStore.Infrastructure.Entities;
 
-namespace WpfApp2.Infrastructure.Services
+namespace BookStore.Infrastructure.Services
 {
   public interface IBookService
   {

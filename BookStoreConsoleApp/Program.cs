@@ -2,9 +2,9 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Ninject;
-using WpfApp2.Infrastructure.Entities;
-using WpfApp2.Infrastructure.Repository;
-using WpfApp2.Infrastructure.Services;
+using BookStore.Infrastructure.Entities;
+using BookStore.Infrastructure.Repository;
+using BookStore.Infrastructure.Services;
 
 namespace BookStore.ConsoleApp
 {
@@ -16,6 +16,8 @@ namespace BookStore.ConsoleApp
 
       IKernel kernel = new StandardKernel();
       kernel.Load(Assembly.GetExecutingAssembly());
+
+
 
       while (true)
       {

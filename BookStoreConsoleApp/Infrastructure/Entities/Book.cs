@@ -4,10 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp2.Infrastructure.Entities
+namespace BookStore.Infrastructure.Entities
 {
   public class Book
   {
+    public Book(string title, string author, string genre, int publishedYear, bool isAvailable = true)
+    {
+      Title = title;
+      Author = author;
+      Genre = genre;
+      PublishedYear = publishedYear;
+      IsAvailable = isAvailable;
+    }
+
+    public Book() { }
+
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
@@ -19,5 +30,7 @@ namespace WpfApp2.Infrastructure.Entities
     {
       return $"{Title} by {Author}";
     }
+
+
   }
 }
