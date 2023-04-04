@@ -4,11 +4,13 @@ namespace BookConsole.UnitTest
 {
   public class UnitTest1 : BaseTest
   {
-    [Fact]
-    public void AddBook_ShouldAddBookToList()
+    [Theory]
+    [InlineData("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "Del Rey", 2000)]
+    [InlineData("The Guide to the Galaxy", "Douglas Adams", "Del Rey", 2001)]
+    public void AddBook_ShouldAddBookToList(string title, string genre, string author, int publishYear)
     {
       // Arrange
-      var book = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "Del Rey", 2000);
+      var book = new Book(title, author, genre, publishYear);
 
       // Act
       this.BookRepository.Add(book);
