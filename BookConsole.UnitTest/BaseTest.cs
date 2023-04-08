@@ -11,15 +11,19 @@ using NSubstitute;
 
 namespace BookConsole.UnitTest
 {
-  public abstract class BaseTest
+  public abstract class BaseTest : IDisposable
   {
-    protected IBookRepository BookRepository { get; set; }
     protected IBookService BookService { get; set;}
 
     protected BaseTest()
     {
-      BookRepository = Substitute.For<BookRepository>("books.txt");
-      BookService = Substitute.For<BookService>(BookRepository);
+      IKernel kernel = new StandardKernel();
+      kernel.Load(Assembly.GetExecutingAssembly());
+      BookService = kernel.Get<IBookService>();
+    }
+
+    public void Dispose() {
+      File.Delete("mockBooks.txt");
     }
   }
 }

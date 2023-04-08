@@ -63,8 +63,8 @@ namespace BookStore.Infrastructure.Services
         throw new ArgumentNullException(nameof(book.Genre), "Genre is required.");
 
       // Check if the book already exists in the repository
-      if (_repository.GetAll().Any(b => b.Id != book.Id && b.Title == book.Title && b.Author == book.Author))
-        throw new InvalidOperationException("This book already exists.");
+      if (!_repository.GetAll().Any(b => b.Id != book.Id && b.Title == book.Title && b.Author == book.Author))
+        throw new InvalidOperationException("This book not exists.");
 
       _repository.Update(book);
     }
