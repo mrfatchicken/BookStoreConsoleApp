@@ -15,7 +15,7 @@ namespace BookStore.Infrastructure.Repository
   {
     private readonly string _filePath;
 
-    public BookJsonRepository(string filePath)
+    public BookJsonRepository(string filePath = "books.json")
     {
       _filePath = filePath;
     }

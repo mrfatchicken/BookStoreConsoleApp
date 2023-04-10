@@ -13,7 +13,7 @@ namespace BookStore.Infrastructure.Repository
   {
     private readonly string _filePath;
 
-    public BookRepository(string filePath)
+    public BookRepository(string filePath = "books.txt")
     {
       _filePath = filePath;
     }

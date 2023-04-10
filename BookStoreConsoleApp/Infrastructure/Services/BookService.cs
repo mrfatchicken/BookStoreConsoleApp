@@ -5,20 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using BookStore.Infrastructure.Entities;
 using BookStore.Infrastructure.Repository;
+using Microsoft.Extensions.Logging;
 
 namespace BookStore.Infrastructure.Services
 {
   public class BookService : IBookService
   {
     private readonly IBookRepository _repository;
+    private readonly ILogger _logger;
 
-    public BookService(IBookRepository repository)
+    public BookService(IBookRepository repository, ILogger<BookService> logger)
     {
       _repository = repository;
+      _logger = logger;
     }
 
     public List<Book> GetAllBooks()
     {
+      _logger.LogInformation("Get all books");
       return _repository.GetAll();
     }
 
@@ -29,6 +33,7 @@ namespace BookStore.Infrastructure.Services
 
     public void AddBook(Book book)
     {
+      _logger.LogInformation($"Add Book {book}");
       if (book == null)
         throw new ArgumentNullException(nameof(book), "Book data cannot be empty.");
 
@@ -50,6 +55,7 @@ namespace BookStore.Infrastructure.Services
 
     public void UpdateBook(Book book)
     {
+      _logger.LogInformation($"Update Book {book}");
       if (book == null)
         throw new ArgumentNullException(nameof(book), "Book data cannot be empty.");
 
@@ -71,6 +77,7 @@ namespace BookStore.Infrastructure.Services
 
     public void DeleteBook(Guid id)
     {
+      _logger.LogInformation($"Delete Book id {id}");
       _repository.Delete(id);
     }
 

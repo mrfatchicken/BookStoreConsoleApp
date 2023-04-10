@@ -5,19 +5,52 @@ using Ninject;
 using BookStore.Infrastructure.Entities;
 using BookStore.Infrastructure.Repository;
 using BookStore.Infrastructure.Services;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BookStore.ConsoleApp
 {
   class Program
   {
+   
+    static IHost AppStartup()
+    {
+
+      var logConfig = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+         .AddEnvironmentVariables().Build();
+
+      Log.Logger = new LoggerConfiguration()
+                    .Enrich.WithMachineName()
+                    .Enrich.WithEnvironmentUserName()
+                    .ReadFrom.Configuration(logConfig)
+                    .CreateLogger();
+
+      Log.Logger.Information("Application Starting");
+
+      var host = Host.CreateDefaultBuilder() // Initialising the Host 
+                  .ConfigureServices((context, services) => { // Adding the DI container for configuration
+#if (JSON)
+                    services.AddTransient<IBookRepository, BookJsonRepository>();
+#else
+                    services.AddTransient<IBookRepository, BookRepository>();
+#endif
+                    services.AddTransient<IBookService, BookService>();
+                  })
+                  .UseSerilog() // Add Serilog
+                  .Build(); // Build the Host
+
+      return host;
+    }
+
     static void Main(string[] args)
     {
+      var host = AppStartup();
+
       Console.WriteLine("Welcome to Book Store");
 
-      IKernel kernel = new StandardKernel();
-      kernel.Load(Assembly.GetExecutingAssembly());
-
-
+      var service = ActivatorUtilities.CreateInstance<BookService>(host.Services);
 
       while (true)
       {
@@ -39,16 +72,16 @@ namespace BookStore.ConsoleApp
         switch (choice)
         {
           case 1:
-            ViewAllBooks(kernel.Get<IBookService>());
+            ViewAllBooks(service);
             break;
           case 2:
-            AddBook(kernel.Get<IBookService>());
+            AddBook(service);
             break;
           case 3:
-            UpdateBook(kernel.Get<IBookService>());
+            UpdateBook(service);
             break;
           case 4:
-            DeleteBook(kernel.Get<IBookService>());
+            DeleteBook(service);
             break;
           case 5:
             Console.WriteLine("Goodbye!");
