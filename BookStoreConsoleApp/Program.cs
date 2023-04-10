@@ -54,38 +54,45 @@ namespace BookStore.ConsoleApp
 
       while (true)
       {
-        Console.WriteLine("============================================");
-        Console.WriteLine("1 - View all books");
-        Console.WriteLine("2 - Add a book");
-        Console.WriteLine("3 - Update a book");
-        Console.WriteLine("4 - Delete a book");
-        Console.WriteLine("5 - Exit");
-
-        Console.Write("Enter your choice: ");
-        int choice;
-        if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5)
+        try
         {
-          Console.WriteLine("Invalid choice");
-          continue;
+          Console.WriteLine("============================================");
+          Console.WriteLine("1 - View all books");
+          Console.WriteLine("2 - Add a book");
+          Console.WriteLine("3 - Update a book");
+          Console.WriteLine("4 - Delete a book");
+          Console.WriteLine("5 - Exit");
+
+          Console.Write("Enter your choice: ");
+          int choice;
+          if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5)
+          {
+            Console.WriteLine("Invalid choice");
+            continue;
+          }
+
+          switch (choice)
+          {
+            case 1:
+              ViewAllBooks(service);
+              break;
+            case 2:
+              AddBook(service);
+              break;
+            case 3:
+              UpdateBook(service);
+              break;
+            case 4:
+              DeleteBook(service);
+              break;
+            case 5:
+              Console.WriteLine("Goodbye!");
+              return;
+          }
         }
-
-        switch (choice)
+        catch (Exception ex)
         {
-          case 1:
-            ViewAllBooks(service);
-            break;
-          case 2:
-            AddBook(service);
-            break;
-          case 3:
-            UpdateBook(service);
-            break;
-          case 4:
-            DeleteBook(service);
-            break;
-          case 5:
-            Console.WriteLine("Goodbye!");
-            return;
+          Log.Logger.Error(ex, "An error has been occurred");
         }
       }
     }

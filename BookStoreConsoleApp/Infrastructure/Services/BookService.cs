@@ -35,21 +35,26 @@ namespace BookStore.Infrastructure.Services
     {
       _logger.LogInformation($"Add Book {book}");
       if (book == null)
+      {
         throw new ArgumentNullException(nameof(book), "Book data cannot be empty.");
-
+      }
       if (string.IsNullOrEmpty(book.Title))
+      {
         throw new ArgumentNullException(nameof(book.Title), "Title is required.");
-
+      }
       if (string.IsNullOrEmpty(book.Author))
+      {
         throw new ArgumentNullException(nameof(book.Author), "Author is required.");
-
+      }
       if (string.IsNullOrEmpty(book.Genre))
+      {
         throw new ArgumentNullException(nameof(book.Genre), "Genre is required.");
-
+      }
       // Check if the book already exists in the repository
       if (_repository.GetAll().Any(b => b.Title == book.Title && b.Author == book.Author))
+      {
         throw new InvalidOperationException("This book already exists.");
-
+      }
       _repository.Add(book);
     }
 
